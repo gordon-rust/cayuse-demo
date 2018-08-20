@@ -43,6 +43,8 @@ public class LocationDataController {
         CompletableFuture<GoogleTimeZone> timeZone = this.locationDataService.getTimeZoneForZip(openWeather.get().getCoord());
         CompletableFuture<GoogleElevation> elevation = this.locationDataService.getElevationForZip(openWeather.get().getCoord());
 
+        CompletableFuture.allOf(openWeather, timeZone, elevation);
+
         return LocationData.buildFrom(openWeather.get(),elevation.get(),timeZone.get());
     }
 
